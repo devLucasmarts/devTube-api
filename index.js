@@ -6,6 +6,8 @@ import userRoutes from './routes/users.js';
 import videoRoutes from './routes/videos.js';
 import commentRoutes from './routes/comments.js';
 
+import 'express-async-errors';
+
 const app = express();
 
 dotenv.config();
