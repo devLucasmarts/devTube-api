@@ -41,10 +41,29 @@ function validateValues(user: User): [boolean, string | null] {
     return [true, null];
 };
 
+function validateUserPassword(userPassword: string): [boolean, string | null] {
+
+    const invalidTypePassword = 'A senha deve conter números, letras e/ou caracteres especiais.';
+
+    const invalidPasswordLength = 'A senha deve conter pelo menos oito caracteres';
+
+    if (typeof userPassword !== 'string') {
+        return [false, invalidTypePassword]
+    };
+
+    if (userPassword.length < 8) {
+        return [false, invalidPasswordLength]
+    };
+
+    return [true, null];
+};
+
 function validationUser(req: Request, res: Response, next: NextFunction) {
     const user: User = req.body;
 
     let [valid, property] = validateProperties(user);
+
+    let [validPasswor, errorMessage] = validateUserPassword(user.password);
 
     if (!valid) {
         return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} é obrigatório.`);
@@ -55,6 +74,12 @@ function validationUser(req: Request, res: Response, next: NextFunction) {
     if (!valid) {
         return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} não pode ser nulo ou vazio.`);
     };
+
+    [validPasswor, errorMessage] = validateUserPassword(user.password);
+
+    if (!validPasswor) {
+        return res.status(StatusCodes.BAD_REQUEST).send(errorMessage);
+    }
 
     next();
 };
