@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import mongoose from "mongoose";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 
