@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import User from "../dtos/User.dto";
+import UserDto from "../dtos/User.dto";
 
 const properties = ['user', 'email', 'password'];
 
-function validateProperties(user: User): [boolean, string | null] {
+function validateProperties(user: UserDto): [boolean, string | null] {
     for (let i = 0; i < properties.length; i += 1) {
         if (!Object.prototype.hasOwnProperty.call(user, properties[i])) {
             return [false, properties[i]];
@@ -15,7 +15,7 @@ function validateProperties(user: User): [boolean, string | null] {
     return [true, null];
 };
 
-function validateValues(user: User): [boolean, string | null] {
+function validateValues(user: UserDto): [boolean, string | null] {
     const entries = Object.entries(user);
 
     for (let i = 0; i < entries.length; i += 1) {
@@ -47,7 +47,7 @@ function validateUserPassword(userPassword: string): [boolean, string | null] {
 };
 
 function validationUser(req: Request, res: Response, next: NextFunction) {
-    const user: User = req.body;
+    const user: UserDto = req.body;
 
     let [valid, property] = validateProperties(user);
 

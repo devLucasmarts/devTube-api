@@ -1,4 +1,4 @@
-interface User {
+interface UserDto {
     user: string;
 
     email: string;
@@ -12,4 +12,4 @@ interface User {
     subscribedUsers: [string];
 }
 
-export default User;
+export default UserDto;
