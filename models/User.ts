@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import User from '../dtos/User.dto';
 
 const UserSchema = new Schema<User>({
-    user: {
+    username: {
         type: String,
         required: true,
         unique: true,

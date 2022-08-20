@@ -5,7 +5,7 @@ import createUser from "../services/authServices";
 
 export const signup = async (req: Request, res: Response) => {
 
-    await createUser(req.body);
+    await createUser(req.body)
 
     res.status(StatusCodes.CREATED).send("User has been crated!");
 };

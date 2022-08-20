@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import UserDto from "../dtos/User.dto";
 
-const properties = ['user', 'email', 'password'];
+const properties = ['username', 'email', 'password'];
 
 function validateProperties(user: UserDto): [boolean, string | null] {
     for (let i = 0; i < properties.length; i += 1) {

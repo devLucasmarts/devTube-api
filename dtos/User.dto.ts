@@ -1,5 +1,5 @@
 interface UserDto {
-    user: string;
+    username: string;
 
     email: string;
 
