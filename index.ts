@@ -1,22 +1,22 @@
-import express from 'express';
-import mongoose from 'mongoose';
+import express, { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import {  connect  } from 'mongoose';
+
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import videoRoutes from './routes/videos.js';
-import commentRoutes from './routes/comments.js';
+import authRoutes from './routes/authRoutes';
+// import userRoutes from './routes/users.js';
+// import videoRoutes from './routes/videos.js';
+// import commentRoutes from './routes/comments.js';
 
 import 'express-async-errors';
-
-import { StatusCodes } from 'http-status-codes';
 
 const app = express();
 
 dotenv.config();
 
 const connection = () => {
-    mongoose.connect(
-        process.env.DB_CONNECTION
+    connect(
+        process.env.DB_CONNECTION ?? ''
     ).then(() => {
         console.log("Connected to DB.");
     }).catch((err) => {
@@ -29,12 +29,12 @@ const port = 3001;
 app.use(express.json());
 
 app.use(authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/videos", videoRoutes);
-app.use("/api/comments", commentRoutes);
+// app.use("/api/users", userRoutes);
+// app.use("/api/videos", videoRoutes);
+// app.use("/api/comments", commentRoutes);
 
-app.use((err, req, res, next) => {
-    const { name, message, details } = err;
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    const { name, message, details } = err as any;
     console.log(`name: ${name}`);
 
     switch (name) {
