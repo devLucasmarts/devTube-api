@@ -1,21 +1,22 @@
-// import mongoose from "mongoose";
+import { Schema, model } from 'mongoose';
 
-// const CommentSchema = new mongoose.Schema({
-//     userId: {
-//         type: String,
-//         required: true,
-//     },
+import Comment from '../dtos/Comment.dto';
 
-//     videoId: {
-//         type: String,
-//         required: true,
-//     },
+const CommentSchema = new Schema<Comment>({
+    userId: {
+        type: String,
+        required: true,
+    },
 
-//     userComment: {
-//         type: string,
-//         required: true,
-//     },
+    videoId: {
+        type: String,
+        required: true,
+    },
 
-// }, { timestamps: true });
+    userComment: {
+        type: String,
+        required: true,
+    },
+}, { timestamps: true });
 
-// export default mongoose.model("Comment", CommentSchema);
+export default model<Comment>('Comment', CommentSchema);
