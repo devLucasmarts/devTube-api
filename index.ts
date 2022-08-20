@@ -1,28 +1,14 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import {  connect  } from 'mongoose';
 
-import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 // import userRoutes from './routes/userRoutes';
 // import videoRoutes from './routes/videoRoutes';
 // import commentRoutes from './routes/commentRoutes';
-
+import connection from './models/Connection';
 import 'express-async-errors';
 
 const app = express();
-
-dotenv.config();
-
-const connection = () => {
-    connect(
-        process.env.DB_CONNECTION ?? ''
-    ).then(() => {
-        console.log("Connected to DB.");
-    }).catch((err) => {
-        throw err;
-    });
-};
 
 const port = 3001;
 
