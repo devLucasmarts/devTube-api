@@ -12,3 +12,5 @@ const createUser = async (user: UserDto) => {
 
     await newUser.save();
 };
+
+export default createUser;
