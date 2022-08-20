@@ -4,9 +4,9 @@ import {  connect  } from 'mongoose';
 
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
-// import userRoutes from './routes/users.js';
-// import videoRoutes from './routes/videos.js';
-// import commentRoutes from './routes/comments.js';
+// import userRoutes from './routes/userRoutes';
+// import videoRoutes from './routes/videoRoutes';
+// import commentRoutes from './routes/commentRoutes';
 
 import 'express-async-errors';
 
