@@ -27,6 +27,20 @@ function validateProperties(user: User): [boolean, string | null] {
     return [true, null];
 };
 
+function validateValues(user: User): [boolean, string | null] {
+    const entries = Object.entries(user);
+
+    for (let i = 0; i < entries.length; i += 1) {
+        const [property, value] = entries[i];
+
+        if (!value) {
+            return [false, property];
+        };
+    };
+
+    return [true, null];
+};
+
 function validationUser(req: Request, res: Response, next: NextFunction) {
     const user: User = req.body;
 
@@ -34,13 +48,13 @@ function validationUser(req: Request, res: Response, next: NextFunction) {
 
     if (!valid) {
         return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} é obrigatório.`);
-    }
+    };
 
-    // [valid, property] = validateValues(user);
+    [valid, property] = validateValues(user);
 
-    // if (!valid) {
-    //     return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} não pode ser nulo ou vazio.`);
-    // }
+    if (!valid) {
+        return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} não pode ser nulo ou vazio.`);
+    };
 
     next();
 };
