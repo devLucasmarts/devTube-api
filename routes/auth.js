@@ -3,10 +3,10 @@ import { signup } from '../controllers/auth.js';
 
 const router = express.Router();
 
-router.post("/signup", signup);
+router.post("/api/auth/signup", signup);
 
-router.post("/signin", );
+router.post("/api/auth/signin", );
 
-router.post("/google", );
+router.post("/api/auth/google", );
 
 export default router;
