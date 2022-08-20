@@ -1,21 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import User from "../dtos/User.dto";
+
 const properties = ['user', 'email', 'password'];
-
-interface User {
-    user: string;
-
-    email: string;
-
-    password: string;
-
-    img: string;
-
-    subscribers: number;
-
-    subscribedUsers: [string];
-}
 
 function validateProperties(user: User): [boolean, string | null] {
     for (let i = 0; i < properties.length; i += 1) {

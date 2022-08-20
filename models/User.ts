@@ -1,19 +1,5 @@
 import { Schema, model } from 'mongoose';
-
-
-interface User {
-    user: string;
-
-    email: string;
-
-    password: string;
-
-    img: string;
-
-    subscribers: number;
-
-    subscribedUsers: [string];
-}
+import User from '../dtos/User.dto';
 
 const UserSchema = new Schema<User>({
     user: {
