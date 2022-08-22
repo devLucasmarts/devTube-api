@@ -44,6 +44,7 @@ export const signinUser = async (user: UserDto): Promise<signinResponse | undefi
     const token = sign({ id: userAccount._id }, process.env.JWT ?? '');
 
     const accountData = {
+        id: userAccount._id,
         username: userAccount.username,
         email: userAccount.email,
         subscribers: userAccount.subscribers,
