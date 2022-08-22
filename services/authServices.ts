@@ -2,7 +2,7 @@ import User from "../models/User";
 import bcrypt from "bcryptjs";
 import UserDto from "../dtos/User.dto";
 
-const createUser = async (user: UserDto) => {
+export const createUser = async (user: UserDto) => {
 
     const { email, username, password } = user;
 
@@ -17,4 +17,14 @@ const createUser = async (user: UserDto) => {
     await newUser.save();
 };
 
-export default createUser;
+export const signinUser = async (user: UserDto) => {
+
+    const { username, password } = user;
+
+    const userAccount = await User.findOne({ username });
+    if (!userAccount) return { accountError: true, message: 'User not found!' };
+
+    const isCorrect = await bcrypt.compare(password, userAccount.password);
+    if (!isCorrect) return { passwordError: true, message: 'Incorrect password' };
+
+};
