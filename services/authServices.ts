@@ -1,8 +1,21 @@
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 import UserDto from "../dtos/User.dto";
+import { sign } from "jsonwebtoken";
 
-export const createUser = async (user: UserDto) => {
+interface signinResponse {
+    accountError?: boolean;
+    passwordError?: boolean;
+    message?: string;
+    token?: string;
+};
+
+interface signUpResponse {
+    error?: boolean;
+    message?: string;
+};
+
+export const createUser = async (user: UserDto): Promise<signUpResponse | undefined> => {
 
     const { email, username, password } = user;
 
@@ -17,7 +30,7 @@ export const createUser = async (user: UserDto) => {
     await newUser.save();
 };
 
-export const signinUser = async (user: UserDto) => {
+export const signinUser = async (user: UserDto): Promise<signinResponse | undefined> => {
 
     const { username, password } = user;
 
@@ -27,5 +40,7 @@ export const signinUser = async (user: UserDto) => {
     const isCorrect = await bcrypt.compare(password, userAccount.password);
     if (!isCorrect) return { passwordError: true, message: 'Incorrect password' };
 
-    const token = jwt.sign({ id: userAccount._id })
+    const token = sign({ id: userAccount._id }, process.env.JWT ?? '');
+
+    if (userAccount) return { message: 'User authorized!', token };
 };
