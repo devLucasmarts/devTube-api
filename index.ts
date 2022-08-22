@@ -5,14 +5,16 @@ import authRoutes from './routes/authRoutes';
 // import userRoutes from './routes/userRoutes';
 // import videoRoutes from './routes/videoRoutes';
 // import commentRoutes from './routes/commentRoutes';
-import connection from './models/Connection';
 import 'express-async-errors';
+import connection from './models/Connection';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 const port = 3001;
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(authRoutes);
 // app.use("/api/users", userRoutes);

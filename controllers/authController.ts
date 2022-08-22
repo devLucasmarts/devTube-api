@@ -22,5 +22,5 @@ export const signin = async (req: Request, res: Response) => {
 
    res.cookie("access_token", loginUser?.token, {
     httpOnly: true
-   }).status(StatusCodes.OK).send(loginUser?.message);
+   }).status(StatusCodes.OK).send(loginUser?.accountData);
 };

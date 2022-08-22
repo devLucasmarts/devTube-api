@@ -10,6 +10,10 @@ interface UserDto {
     subscribers: number;
 
     subscribedUsers: [string];
+
+    createdAt: string;
+
+    updatedAt: string;
 }
 
 export default UserDto;

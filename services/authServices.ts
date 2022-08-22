@@ -8,6 +8,7 @@ interface signinResponse {
     passwordError?: boolean;
     message?: string;
     token?: string;
+    accountData?: object
 };
 
 interface signUpResponse {
@@ -42,5 +43,14 @@ export const signinUser = async (user: UserDto): Promise<signinResponse | undefi
 
     const token = sign({ id: userAccount._id }, process.env.JWT ?? '');
 
-    if (userAccount) return { message: 'User authorized!', token };
+    const accountData = {
+        username: userAccount.username,
+        email: userAccount.email,
+        subscribers: userAccount.subscribers,
+        subscribedUsers: userAccount.subscribedUsers,
+        createdAt: userAccount.createdAt,
+	    updatedAt: userAccount.updatedAt,
+    }
+
+    if (userAccount) return { accountData , token };
 };
