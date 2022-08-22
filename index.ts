@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import authRoutes from './routes/authRoutes';
-// import userRoutes from './routes/userRoutes';
+import userRoutes from './routes/usersRoutes';
 // import videoRoutes from './routes/videoRoutes';
 // import commentRoutes from './routes/commentRoutes';
 import 'express-async-errors';
@@ -17,11 +17,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(authRoutes);
-// app.use("/api/users", userRoutes);
+app.use(userRoutes);
 // app.use("/api/videos", videoRoutes);
 // app.use("/api/comments", commentRoutes);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
     const { name, message, details } = err as any;
     console.log(`name: ${name}`);
 

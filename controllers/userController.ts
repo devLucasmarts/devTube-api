@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { updateUser } from "../services/userServices";
 
-export const updateUserAccount = async (req: Request, res: Response) => {
+export const updateUserAccount = async (req: any, res: any) => {
 
-    if (req.params.id === req.params.user) {
+    if (req.params.id === req.user.id) {
+        const updatedUser = await updateUser(req.params.id, req.body);
 
+        res.status(StatusCodes.OK).json(updatedUser);
     } else {
         return res.status(StatusCodes.FORBIDDEN).send("You can update only your account!");
-    }
+    };
 };
 
 export const deleteUserAccount = async (req: Request, res: Response) => {
