@@ -27,4 +27,5 @@ export const signinUser = async (user: UserDto) => {
     const isCorrect = await bcrypt.compare(password, userAccount.password);
     if (!isCorrect) return { passwordError: true, message: 'Incorrect password' };
 
+    const token = jwt.sign({ id: userAccount._id })
 };
