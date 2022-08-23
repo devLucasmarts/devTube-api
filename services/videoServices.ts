@@ -1,3 +1,4 @@
+import User from '../models/User';
 import Video from '../models/Video';
 
 interface videoServicesResponse {
@@ -19,10 +20,9 @@ interface randomVideoResponse {
 }
 
 export const addNewVideo = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse> => {
-    
     if (!title) return { error: true, message: 'Title is required.'};
 
-    const newVideo = new Video({ id, title, description, imgUrl, videoUrl });
+    const newVideo = new Video({ userId: id, title, description, imgUrl, videoUrl });
 
     const savedVideo = await newVideo.save();
 
@@ -95,4 +95,21 @@ export const trendVideos = async ():Promise<randomVideoResponse | undefined | nu
     if (!videos) return { notFounderror: true, message: 'Cannot get videos.' };
 
     return videos as randomVideoResponse;
+};
+
+export const subsVideos = async (id: string) => {
+    const user = await User.findById(id);
+
+    const subscribedChannels = user?.subscribedUsers;
+
+    const list = await Promise.all<any>(
+        subscribedChannels?.map((channelId: string) => {
+            return Video.find({ userId: channelId });
+        })
+    );
+
+    const formatedList = list.flat()
+        .sort((firstVideo, lastVideo) => lastVideo.createdAt - firstVideo.createdAt);
+
+    return formatedList;
 };

@@ -54,7 +54,7 @@ export const getUser = async (userId: string):Promise<userResponse | null> => {
 };
 
 export const addSubscription = async (channelAccountId: string, userAccountId: string):Promise<userResponse> => {
-    await User.findById(channelAccountId, {
+    await User.findByIdAndUpdate(channelAccountId, {
         $push:{ subscribedUsers: userAccountId }
     });
 
@@ -66,7 +66,7 @@ export const addSubscription = async (channelAccountId: string, userAccountId: s
 };
 
 export const removeSubscription = async (channelAccountId: string, userAccountId: string):Promise<userResponse> => {
-    await User.findById(channelAccountId, {
+    await User.findByIdAndUpdate(channelAccountId, {
         $pull:{ subscribedUsers: userAccountId }
     });
 

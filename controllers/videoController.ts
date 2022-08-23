@@ -6,14 +6,15 @@ import {
     getVideoById,
     incrementViews,
     randomVideos,
+    subsVideos,
     trendVideos,
     updateUserVideo
 } from "../services/videoServices";
 
 export const addVideo = async (req: any, res: Response) => {
-    const { id } = req.user.id;
+    const { id } = req.user;
     const { title, description, imgUrl, videoUrl } = req.body;
-
+    console.log(id)
     const newVideo = await addNewVideo(id, title, description, imgUrl, videoUrl);
 
     if (newVideo.error) return res.status(StatusCodes.BAD_REQUEST).send(newVideo.message);
@@ -22,7 +23,7 @@ export const addVideo = async (req: any, res: Response) => {
 };
 
 export const updateVideo = async (req: any, res: Response) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const { id: userId } = req.user;
     const { title, description, imgUrl, videoUrl } = req.body;
 
@@ -38,7 +39,7 @@ export const updateVideo = async (req: any, res: Response) => {
 };
 
 export const deleteVideo = async (req: any, res: Response) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const { id: userId } = req.user;
 
     const deletedVideo = await deleteUserVideo(id, userId);
@@ -86,12 +87,12 @@ export const randomVideo = async (_req: Request, res: Response) => {
     return res.status(StatusCodes.OK).json(videos);
 };
 
-export const subsVideo = async (req: Request, res: Response) => {
-    const { id } = req.params;
+export const subsVideo = async (req: any, res: Response) => {
+    const { id } = req.user;
 
-    const video = await getVideoById(id);
+    const videos = await subsVideos(id);
 
-    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+    // if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
 
-    return res.status(StatusCodes.OK).json(video);
+    return res.status(StatusCodes.OK).json(videos);
 };
