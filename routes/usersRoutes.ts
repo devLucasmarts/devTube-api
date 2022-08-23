@@ -17,10 +17,10 @@ router.delete("/api/users/:id", verifyToken, deleteUserAccount);
 
 router.get("/api/users/find/:id", getUserAccount);
 
-router.put("/api/users/sub/:id", subscribe);
+router.put("/api/users/sub/:id", verifyToken,subscribe);
 
-router.put("/api/users/unsub/:id", unsubscribe);
+router.put("/api/users/unsub/:id", verifyToken,unsubscribe);
 
-router.put("/api/users/like/:id", likeVideo);
+router.put("/api/users/like/:id", verifyToken,likeVideo);
 
 export default router;
