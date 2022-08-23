@@ -24,8 +24,12 @@ export const updateUserAccount = async (req: any, res: Response) => {
 };
 
 export const deleteUserAccount = async (req: any, res: Response) => {
-    if (req.params.id === req.user.id) {
-        const deletedUser = await deleteUser(req.params.id);
+
+    const { id: accountId } = req.params;
+    const { id: tokenId } = req.user;
+
+    if (accountId === tokenId) {
+        const deletedUser = await deleteUser(accountId);
 
         res.status(StatusCodes.OK).send(deletedUser.message);
     } else {
@@ -35,7 +39,10 @@ export const deleteUserAccount = async (req: any, res: Response) => {
 };
 
 export const getUserAccount = async (req: Request, res: Response) => {
-    const account = await getUser(req.params.id);
+
+    const { id } = req.params;
+
+    const account = await getUser(id);
 
     if (account?.error) return res.status(StatusCodes.NOT_FOUND).send(account?.message);
 
