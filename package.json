@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node ./dist/index.js",
-    "dev": "tsnd index.ts",
+    "dev": "nodemon --watch './' --exec 'ts-node  ./index.ts' -e ts",
     "build": "tsc"
   },
   "keywords": [],
