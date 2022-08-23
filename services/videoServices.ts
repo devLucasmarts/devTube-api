@@ -12,6 +12,12 @@ interface videoServicesResponse {
     message?: string;
 }
 
+interface randomVideoResponse {
+    randomVideo?: [object];
+    notFounderror?: boolean;
+    message?: string;
+}
+
 export const addNewVideo = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse> => {
     
     if (!title) return { error: true, message: 'Title is required.'};
@@ -74,3 +80,11 @@ export const incrementViews = async (id: string):Promise<videoServicesResponse |
 
     return { message: 'The view has been increased' };
 };
+
+export const randomVideos = async ():Promise<randomVideoResponse | undefined | null> => {
+    const randomVideo = await Video.aggregate([{ $sample: { size: 40 } }]);
+
+    if (!randomVideo) return { notFounderror: true, message: 'Cannot get videos.' };
+
+    return randomVideo as randomVideoResponse;
+}
