@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { addSubscription, deleteUser, getUser, updateUser } from "../services/userServices";
+import { addSubscription, deleteUser, getUser, removeSubscription, updateUser } from "../services/userServices";
 
 export const updateUserAccount = async (req: any, res: any) => {
 
@@ -42,9 +42,14 @@ export const subscribe = async (req: any, res: Response) => {
     return res.status(StatusCodes.OK).json(subscription.message);
 };
 
-export const unsubscribe = async (req: Request, res: Response) => {
+export const unsubscribe = async (req: any, res: Response) => {
 
-    
+    const channelAccountId = req.user.id;
+    const userAccountId = req.params.id;
+
+    const unsubscription = await removeSubscription(channelAccountId, userAccountId);
+
+    return res.status(StatusCodes.OK).json(unsubscription.message);
 };
 
 export const likeVideo = async (req: Request, res: Response) => {

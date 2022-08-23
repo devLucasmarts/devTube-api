@@ -67,3 +67,16 @@ export const addSubscription = async (channelAccountId: string, userAccountId: s
 
     return { message: 'Subscribed!' };
 };
+
+export const removeSubscription = async (channelAccountId: string, userAccountId: string):Promise<userResponse> => {
+    await User.findById(channelAccountId, {
+        $pull:{ subscribedUsers: userAccountId }
+    });
+
+    await User.findByIdAndUpdate(userAccountId, {
+        $inc:{ subscribers: -1 }
+    });
+
+    return { message: 'Unsubscribed!' };
+};
+
