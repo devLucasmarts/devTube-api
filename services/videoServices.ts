@@ -88,3 +88,11 @@ export const randomVideos = async ():Promise<randomVideoResponse | undefined | n
 
     return randomVideo as randomVideoResponse;
 }
+
+export const trendVideos = async ():Promise<randomVideoResponse | undefined | null> => {
+    const videos = await Video.find().sort({ views: -1 });
+
+    if (!videos) return { notFounderror: true, message: 'Cannot get videos.' };
+
+    return videos as randomVideoResponse;
+};

@@ -6,6 +6,7 @@ import {
     getVideoById,
     incrementViews,
     randomVideos,
+    trendVideos,
     updateUserVideo
 } from "../services/videoServices";
 
@@ -67,14 +68,13 @@ export const viewVideo = async (req: Request, res: Response) => {
     return res.status(StatusCodes.OK).send(video?.message);
 };
 
-export const trendVideo = async (req: Request, res: Response) => {
-    const { id } = req.params;
+export const trendVideo = async (_req: Request, res: Response) => {
 
-    const video = await getVideoById(id);
+    const videos = await trendVideos();
 
-    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+    if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
-    return res.status(StatusCodes.OK).json(video);
+    return res.status(StatusCodes.OK).json(videos);
 };
 
 export const randomVideo = async (_req: Request, res: Response) => {
