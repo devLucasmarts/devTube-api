@@ -55,3 +55,15 @@ export const getUser = async (userId: string):Promise<userResponse | null> => {
 
     return user;
 };
+
+export const addSubscription = async (channelAccountId: string, userAccountId: string):Promise<userResponse> => {
+    await User.findById(channelAccountId, {
+        $push:{ subscribedUsers: userAccountId }
+    });
+
+    await User.findByIdAndUpdate(userAccountId, {
+        $inc:{ subscribers: 1 }
+    });
+
+    return { message: 'Subscribed!' };
+};
