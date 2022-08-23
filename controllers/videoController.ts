@@ -79,11 +79,11 @@ export const trendVideo = async (req: Request, res: Response) => {
 
 export const randomVideo = async (_req: Request, res: Response) => {
 
-    const video = await randomVideos();
+    const videos = await randomVideos();
 
-    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+    if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
-    return res.status(StatusCodes.OK).json(video);
+    return res.status(StatusCodes.OK).json(videos);
 };
 
 export const subsVideo = async (req: Request, res: Response) => {
