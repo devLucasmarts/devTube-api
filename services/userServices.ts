@@ -16,9 +16,9 @@ interface userResponse {
     message?: string;
 };
 
-export const updateUser = async (userId: string, user: UserDto) => {
+export const updateUser = async (userId: string, username: string, email: string, password: string, img: string) => {
     const updatedUser = await User.findByIdAndUpdate(userId, {
-        $set: user
+        $set: { username, email, password, img }
     }, { new: true });
 
     const accountUpdated = {
@@ -27,8 +27,6 @@ export const updateUser = async (userId: string, user: UserDto) => {
         "email": updatedUser?.email,
         "subscribers":  updatedUser?.subscribers,
         "subscribedUsers": updatedUser?.subscribedUsers,
-        "createdAt": updatedUser?.createdAt,
-        "updatedAt": updatedUser?.updatedAt,
     };
 
     return accountUpdated;

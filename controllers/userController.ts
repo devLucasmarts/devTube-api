@@ -1,11 +1,21 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { addSubscription, deleteUser, getUser, removeSubscription, updateUser } from "../services/userServices";
+import {
+    addSubscription,
+    deleteUser,
+    getUser,
+    removeSubscription,
+    updateUser
+} from "../services/userServices";
 
-export const updateUserAccount = async (req: any, res: any) => {
+export const updateUserAccount = async (req: any, res: Response) => {
 
-    if (req.params.id === req.user.id) {
-        const updatedUser = await updateUser(req.params.id, req.body);
+    const { id: accountId } = req.params;
+    const { id: tokenId } = req.user;
+    const { username, email, password, img } = req.body;
+
+    if (accountId === tokenId) {
+        const updatedUser = await updateUser(accountId, username, email, password, img);
 
         res.status(StatusCodes.OK).json(updatedUser);
     } else {
@@ -13,7 +23,7 @@ export const updateUserAccount = async (req: any, res: any) => {
     };
 };
 
-export const deleteUserAccount = async (req: any, res: any) => {
+export const deleteUserAccount = async (req: any, res: Response) => {
     if (req.params.id === req.user.id) {
         const deletedUser = await deleteUser(req.params.id);
 
