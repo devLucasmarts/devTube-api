@@ -58,3 +58,11 @@ export const deleteUserVideo = async (id: string, userId: string):Promise<videoS
    };
 
 };
+
+export const getVideoById = async (id: string):Promise<videoServicesResponse | undefined | null> => {
+    const video = await Video.findById(id);
+
+    if (!video) return { notFounderror: true, message: 'Video not found.' };
+
+    return video;
+};

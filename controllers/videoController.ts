@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { addNewVideo, deleteUserVideo, updateUserVideo } from "../services/videoServices";
+import { addNewVideo, deleteUserVideo, getVideoById, updateUserVideo } from "../services/videoServices";
 
 export const addVideo = async (req: any, res: Response) => {
     const { id } = req.user.id;
@@ -43,5 +43,11 @@ export const deleteVideo = async (req: any, res: Response) => {
 };
 
 export const getVideo = async (req: Request, res: Response) => {
+    const { id } = req.params;
 
+    const video = await getVideoById(id);
+
+    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+
+    return res.status(StatusCodes.OK).json(video);
 };
