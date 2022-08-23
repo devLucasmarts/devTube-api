@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { deleteUser, updateUser } from "../services/userServices";
+import { deleteUser, getUser, updateUser } from "../services/userServices";
 
 export const updateUserAccount = async (req: any, res: any) => {
 
@@ -25,8 +25,11 @@ export const deleteUserAccount = async (req: any, res: any) => {
 };
 
 export const getUserAccount = async (req: Request, res: Response) => {
+    const account = await getUser(req.params.id);
 
-    
+    if (account?.error) return res.status(StatusCodes.NOT_FOUND).send(account?.message);
+
+    return res.status(StatusCodes.OK).json(account);
 };
 
 export const subscribe = async (req: Request, res: Response) => {

@@ -1,5 +1,20 @@
 import User from "../models/User";
 import UserDto from "../dtos/User.dto";
+var ObjectID = require('mongodb').ObjectID;
+
+
+interface userResponse {
+    _id?: object,
+    username?: string,
+    email?: string,
+    img?: string,
+    subscribers?: number,
+    subscribedUsers?: [string],
+    createdAt?: string,
+    updatedAt?: string,
+    error?: boolean;
+    message?: string;
+};
 
 export const updateUser = async (userId: string, user: UserDto) => {
     const updatedUser = await User.findByIdAndUpdate(userId, {
@@ -24,4 +39,19 @@ export const deleteUser = async (userId: string) => {
     await User.findByIdAndDelete(userId);
 
     return { message: 'User has been deleted.' };
+};
+
+export const getUser = async (userId: string):Promise<userResponse | null> => {
+    const user = User.findById( new ObjectID(userId) , {
+         _id: 1, 
+         username: 1,
+         email: 1,
+         img: 1,
+         subscribers: 1,
+         subscribedUsers: 1
+    });
+
+    if (!user) return {error: true, message: 'Account not found.'};
+
+    return user;
 };
