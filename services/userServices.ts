@@ -18,3 +18,10 @@ export const updateUser = async (userId: string, user: UserDto) => {
 
     return accountUpdated;
 };
+
+
+export const deleteUser = async (userId: string) => {
+    await User.findByIdAndDelete(userId);
+
+    return { message: 'User has been deleted.' };
+};

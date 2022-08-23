@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.put("/api/users/:id", verifyToken, updateUserAccount);
 
-router.delete("/api/users/:id", deleteUserAccount);
+router.delete("/api/users/:id", verifyToken, deleteUserAccount);
 
 router.get("/api/users/find/:id", getUserAccount);
 
