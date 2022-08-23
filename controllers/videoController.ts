@@ -51,3 +51,43 @@ export const getVideo = async (req: Request, res: Response) => {
 
     return res.status(StatusCodes.OK).json(video);
 };
+
+export const viewVideo = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const video = await getVideoById(id);
+
+    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+
+    return res.status(StatusCodes.OK).json(video);
+};
+
+export const trendVideo = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const video = await getVideoById(id);
+
+    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+
+    return res.status(StatusCodes.OK).json(video);
+};
+
+export const randomVideo = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const video = await getVideoById(id);
+
+    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+
+    return res.status(StatusCodes.OK).json(video);
+};
+
+export const subsVideo = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const video = await getVideoById(id);
+
+    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+
+    return res.status(StatusCodes.OK).json(video);
+};
