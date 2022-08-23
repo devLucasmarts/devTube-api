@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { addNewVideo, updateUserVideo } from "../services/videoServices";
+import { addNewVideo, deleteUserVideo, updateUserVideo } from "../services/videoServices";
 
 export const addVideo = async (req: any, res: Response) => {
     const { id } = req.user.id;
@@ -29,8 +29,17 @@ export const updateVideo = async (req: any, res: Response) => {
     return res.status(StatusCodes.OK).json(updatedVideo);
 };
 
-export const deleteVideo = async (req: Request, res: Response) => {
+export const deleteVideo = async (req: any, res: Response) => {
+    const { id } = req.params.id;
+    const { id: userId } = req.user;
 
+    const deletedVideo = await deleteUserVideo(id, userId);
+
+    if (deletedVideo?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(deletedVideo?.message);
+
+    if (deletedVideo?.unauthorizedError) return res.status(StatusCodes.UNAUTHORIZED).send(deletedVideo?.message);
+
+    return res.status(StatusCodes.OK).send(deletedVideo?.message);
 };
 
 export const getVideo = async (req: Request, res: Response) => {

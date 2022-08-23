@@ -44,8 +44,10 @@ export const updateUserVideo = async (id: string, userId: string, title: string,
 };
 
 export const deleteUserVideo = async (id: string, userId: string):Promise<videoServicesResponse | undefined | null> => {
-    
+
     const video = await Video.findById(id);
+
+    if (!video) return { notFounderror: true, message: 'Video not found.' };
 
     if (userId === video.userId) {
         await Video.findByIdAndDelete(id);
