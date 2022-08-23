@@ -1,6 +1,5 @@
 import User from "../models/User";
 import bcrypt from "bcryptjs";
-import UserDto from "../dtos/User.dto";
 import { sign } from "jsonwebtoken";
 
 interface signinResponse {

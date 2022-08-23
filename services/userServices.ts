@@ -1,5 +1,4 @@
 import User from "../models/User";
-import UserDto from "../dtos/User.dto";
 var ObjectID = require('mongodb').ObjectID;
 
 
