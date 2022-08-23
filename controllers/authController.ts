@@ -5,7 +5,9 @@ import { createUser, signinUser } from "../services/authServices";
 
 export const signup = async (req: Request, res: Response) => {
 
-    const createdUser =  await createUser(req.body);
+    const { email, username, password } = req.body;
+
+    const createdUser =  await createUser(email, username, password);
 
     if (createdUser?.error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(createdUser.message);
 
@@ -14,7 +16,9 @@ export const signup = async (req: Request, res: Response) => {
 
 export const signin = async (req: Request, res: Response) => {
 
-   const loginUser = await signinUser(req.body);
+   const { username, password } = req.body;
+
+   const loginUser = await signinUser(username, password);
 
    if (loginUser?.accountError) return res.status(StatusCodes.NOT_FOUND).send(loginUser.message);
 

@@ -16,9 +16,7 @@ interface signUpResponse {
     message?: string;
 };
 
-export const createUser = async (user: UserDto): Promise<signUpResponse | undefined> => {
-
-    const { email, username, password } = user;
+export const createUser = async (email: string, username: string, password: string): Promise<signUpResponse | undefined> => {
 
     if (await User.findOne({ email })) return {error: true, message: 'Email already in use!'};
     if (await User.findOne({ username })) return {error: true, message: 'Username already in use!'};
@@ -26,14 +24,12 @@ export const createUser = async (user: UserDto): Promise<signUpResponse | undefi
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const newUser = new User({ ...user, password: hash });
+    const newUser = new User({ email, username, password: hash });
 
     await newUser.save();
 };
 
-export const signinUser = async (user: UserDto): Promise<signinResponse | undefined> => {
-
-    const { username, password } = user;
+export const signinUser = async (username: string, password: string ): Promise<signinResponse | undefined> => {
 
     const userAccount = await User.findOne({ username });
     if (!userAccount) return { accountError: true, message: 'User not found!' };
@@ -49,8 +45,6 @@ export const signinUser = async (user: UserDto): Promise<signinResponse | undefi
         email: userAccount.email,
         subscribers: userAccount.subscribers,
         subscribedUsers: userAccount.subscribedUsers,
-        createdAt: userAccount.createdAt,
-	    updatedAt: userAccount.updatedAt,
     }
 
     if (userAccount) return { accountData , token };
