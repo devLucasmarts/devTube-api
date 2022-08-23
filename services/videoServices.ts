@@ -8,6 +8,7 @@ interface videoServicesResponse {
     videoUrl?: string;
     error?: boolean;
     notFounderror?: boolean;
+    unauthorizedError?: boolean;
     message?: string;
 }
 
@@ -36,6 +37,8 @@ export const updateUserVideo = async (id: string, userId: string, title: string,
     }, { new: true });
 
     return updatedVideo;
+   } else {
+    return { unauthorizedError: true, message: 'You can update only your video.' };
    };
 
 };

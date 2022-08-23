@@ -22,6 +22,8 @@ export const updateVideo = async (req: any, res: Response) => {
 
     if (updatedVideo?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(updatedVideo.message);
 
+    if (updatedVideo?.unauthorizedError) return res.status(StatusCodes.UNAUTHORIZED).send(updatedVideo.message);
+
     if (updatedVideo?.error) return res.status(StatusCodes.BAD_REQUEST).send(updatedVideo.message);
 
     return res.status(StatusCodes.OK).json(updatedVideo);
