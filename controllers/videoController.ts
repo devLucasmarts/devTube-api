@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { addNewVideo, deleteUserVideo, getVideoById, incrementViews, randomVideos, updateUserVideo } from "../services/videoServices";
+import { 
+    addNewVideo,
+    deleteUserVideo,
+    getVideoById,
+    incrementViews,
+    randomVideos,
+    updateUserVideo
+} from "../services/videoServices";
 
 export const addVideo = async (req: any, res: Response) => {
     const { id } = req.user.id;
