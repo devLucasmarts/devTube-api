@@ -66,3 +66,11 @@ export const getVideoById = async (id: string):Promise<videoServicesResponse | u
 
     return video;
 };
+
+export const incrementViews = async (id: string):Promise<videoServicesResponse | undefined | null> => {
+    await Video.findByIdAndUpdate(id, {
+        $inc: { views: 1 }
+    });
+
+    return { message: 'The view has been increased' };
+};

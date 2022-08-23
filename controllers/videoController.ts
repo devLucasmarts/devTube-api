@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { addNewVideo, deleteUserVideo, getVideoById, updateUserVideo } from "../services/videoServices";
+import { addNewVideo, deleteUserVideo, getVideoById, incrementViews, updateUserVideo } from "../services/videoServices";
 
 export const addVideo = async (req: any, res: Response) => {
     const { id } = req.user.id;
@@ -55,11 +55,9 @@ export const getVideo = async (req: Request, res: Response) => {
 export const viewVideo = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const video = await getVideoById(id);
+    const video = await incrementViews(id);
 
-    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
-
-    return res.status(StatusCodes.OK).json(video);
+    return res.status(StatusCodes.OK).send(video?.message);
 };
 
 export const trendVideo = async (req: Request, res: Response) => {
