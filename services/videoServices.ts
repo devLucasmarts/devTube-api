@@ -42,3 +42,17 @@ export const updateUserVideo = async (id: string, userId: string, title: string,
    };
 
 };
+
+export const deleteUserVideo = async (id: string, userId: string):Promise<videoServicesResponse | undefined | null> => {
+    
+    const video = await Video.findById(id);
+
+    if (userId === video.userId) {
+        await Video.findByIdAndDelete(id);
+
+    return { message: 'The video has been deleted.' };
+   } else {
+    return { unauthorizedError: true, message: 'You can delete only your video.' };
+   };
+
+};
