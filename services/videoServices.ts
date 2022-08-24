@@ -97,7 +97,7 @@ export const trendVideos = async ():Promise<randomVideoResponse | undefined | nu
     return videos as randomVideoResponse;
 };
 
-export const subsVideos = async (id: string) => {
+export const subsVideos = async (id: string):Promise<randomVideoResponse | undefined | null> => {
     const user = await User.findById(id);
 
     const subscribedChannels = user?.subscribedUsers;
@@ -111,5 +111,21 @@ export const subsVideos = async (id: string) => {
     const formatedList = list.flat()
         .sort((firstVideo, lastVideo) => lastVideo.createdAt - firstVideo.createdAt);
 
-    return formatedList;
+    return formatedList as randomVideoResponse;
+};
+
+export const getVideosByTags = async (tags: Array<string>):Promise<randomVideoResponse | undefined | null> => {
+    const videos = await Video.find({ tags: { $in: tags } }).limit(20);
+
+    if (videos.length < 1) return { notFounderror: true, message: 'Video not found.' };
+
+    return videos as randomVideoResponse;
+};
+
+export const search = async ():Promise<randomVideoResponse | undefined | null> => {
+    const videos = await Video.find().sort({ views: -1 });
+
+    if (!videos) return { notFounderror: true, message: 'Cannot get videos.' };
+
+    return videos as randomVideoResponse;
 };

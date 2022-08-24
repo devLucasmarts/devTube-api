@@ -4,6 +4,7 @@ import {
     addNewVideo,
     deleteUserVideo,
     getVideoById,
+    getVideosByTags,
     incrementViews,
     randomVideos,
     subsVideos,
@@ -92,7 +93,27 @@ export const subsVideo = async (req: any, res: Response) => {
 
     const videos = await subsVideos(id);
 
-    // if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+    if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
+
+    return res.status(StatusCodes.OK).json(videos);
+};
+
+export const getVideoByTags = async (req: Request, res: Response) => {
+
+    const tags = (req.query.tags as string)?.split(',')
+
+    const videos = await getVideosByTags(tags);
+
+    if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
+
+    return res.status(StatusCodes.OK).json(videos);
+};
+
+export const searchVideo = async (_req: Request, res: Response) => {
+
+    const videos = await trendVideos();
+
+    if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
     return res.status(StatusCodes.OK).json(videos);
 };
