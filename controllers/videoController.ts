@@ -7,6 +7,7 @@ import {
     getVideosByTags,
     incrementViews,
     randomVideos,
+    search,
     subsVideos,
     trendVideos,
     updateUserVideo
@@ -109,9 +110,11 @@ export const getVideoByTags = async (req: Request, res: Response) => {
     return res.status(StatusCodes.OK).json(videos);
 };
 
-export const searchVideo = async (_req: Request, res: Response) => {
+export const searchVideo = async (req: Request, res: Response) => {
+    
+    const query = (req.query.q as string);
 
-    const videos = await trendVideos();
+    const videos = await search(query);
 
     if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 

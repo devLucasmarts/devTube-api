@@ -117,15 +117,15 @@ export const subsVideos = async (id: string):Promise<randomVideoResponse | undef
 export const getVideosByTags = async (tags: Array<string>):Promise<randomVideoResponse | undefined | null> => {
     const videos = await Video.find({ tags: { $in: tags } }).limit(20);
 
-    if (videos.length < 1) return { notFounderror: true, message: 'Video not found.' };
+    if (!videos.length) return { notFounderror: true, message: 'Video not found.' };
 
     return videos as randomVideoResponse;
 };
 
-export const search = async ():Promise<randomVideoResponse | undefined | null> => {
-    const videos = await Video.find().sort({ views: -1 });
+export const search = async (query: string):Promise<videoServicesResponse | undefined | null> => {
+    const videos = await Video.find({ title: { $regex: query, $options: "i" } }).limit(40);
 
-    if (!videos) return { notFounderror: true, message: 'Cannot get videos.' };
+    if (!videos.length) return { notFounderror: true, message: 'Video not found.' };
 
-    return videos as randomVideoResponse;
+    return videos as videoServicesResponse;
 };
