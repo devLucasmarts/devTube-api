@@ -1,7 +1,22 @@
 import Comment from "../models/Comment";
 import Video from "../models/Video";
 
-export const createCommentServices = async (id: string, videoId: string, userComment: string) => {
+interface commentServicesResponse {
+    userId?: string;
+	videoId?: string;
+	userComment?: string;
+    createdAt?: string;
+	updatedAt?: string;
+    error?: boolean;
+    notFoundError?: boolean;
+    message?: string;
+    comments?: object[]
+}
+
+export const createCommentServices = async (id: string, videoId: string, userComment: string):Promise<commentServicesResponse | undefined> => {
+
+    if (!videoId) return { error: true, message: 'videoId is required!' };
+    if (!userComment) return { error: true, message: 'Please write some comment' };
 
     const newComment = new Comment({  userId: id, videoId, userComment  });
 
@@ -10,7 +25,7 @@ export const createCommentServices = async (id: string, videoId: string, userCom
     return savedComment;
 };
 
-export const deleteCommentServices = async (commentId: string, videoId: string, cookieId: string) => {
+export const deleteCommentServices = async (commentId: string, videoId: string, cookieId: string):Promise<commentServicesResponse | undefined> => {
 
     const comment = await Comment.findById(commentId);
     const video = await Video.findById(videoId);
@@ -25,8 +40,13 @@ export const deleteCommentServices = async (commentId: string, videoId: string, 
 
 };
 
-export const getCommentsServices = async (videoId: string) => {
+export const getCommentsServices = async (videoId: string):Promise<commentServicesResponse | undefined> => {
+
+    if (!videoId) return { error: true, message: 'Video id is required!' };
+
     const comments = await Comment.find({ videoId });
 
-    return comments;
+    if (!comments.length) return { notFoundError: true, message: 'No comments yet.' }
+
+    return comments as commentServicesResponse;
 };

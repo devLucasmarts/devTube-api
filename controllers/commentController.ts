@@ -9,6 +9,8 @@ export const addComment = async (req: any, res: Response) => {
 
     const newComment = await createCommentServices(id, videoId, userComment);
 
+    if (newComment?.error) return res.status(StatusCodes.BAD_REQUEST).send(newComment?.message);
+
     return res.status(StatusCodes.CREATED).json(newComment);
 };
 
@@ -29,6 +31,10 @@ export const getComments = async (req: Request, res: Response) => {
     const { videoId } = req.params;
 
     const comments = await getCommentsServices(videoId);
+
+    if (comments?.error) return res.status(StatusCodes.BAD_REQUEST).send(comments?.message);
+
+    if (comments?.notFoundError) return res.status(StatusCodes.NOT_FOUND).send(comments?.message);
 
     return res.status(StatusCodes.OK).json(comments);
 };
