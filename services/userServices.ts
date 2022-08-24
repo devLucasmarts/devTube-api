@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 var ObjectID = require('mongodb').ObjectID;
 
 
@@ -77,3 +78,11 @@ export const removeSubscription = async (channelAccountId: string, userAccountId
     return { message: 'Unsubscribed!' };
 };
 
+export const likeVideoServices = async (id: string, videoId: string):Promise<userResponse> => {
+    await Video.findByIdAndUpdate(videoId, {
+        $addToSet: { likes: id },
+        $pull: { dislikes: id }
+    });
+
+    return { message: 'Feedback has been sent!' };
+};

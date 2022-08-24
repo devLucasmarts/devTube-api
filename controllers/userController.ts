@@ -4,6 +4,7 @@ import {
     addSubscription,
     deleteUser,
     getUser,
+    likeVideoServices,
     removeSubscription,
     updateUser
 } from "../services/userServices";
@@ -69,9 +70,14 @@ export const unsubscribe = async (req: any, res: Response) => {
     return res.status(StatusCodes.OK).json(unsubscription.message);
 };
 
-export const likeVideo = async (req: Request, res: Response) => {
+export const likeVideo = async (req: any, res: Response) => {
 
-    
+    const id = req.user.id;
+    const videoId = req.user.videoId;
+
+    const like = await likeVideoServices(id, videoId);
+
+    return res.status(StatusCodes.OK).json(like.message);
 };
 
 export const dislikeVideo = async (req: Request, res: Response) => {

@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     deleteUserAccount,
+    dislikeVideo,
     getUserAccount,
     likeVideo,
     subscribe,
@@ -17,10 +18,12 @@ router.delete("/api/users/:id", verifyToken, deleteUserAccount);
 
 router.get("/api/users/find/:id", getUserAccount);
 
-router.put("/api/users/sub/:id", verifyToken,subscribe);
+router.put("/api/users/sub/:id", verifyToken, subscribe);
 
-router.put("/api/users/unsub/:id", verifyToken,unsubscribe);
+router.put("/api/users/unsub/:id", verifyToken, unsubscribe);
 
-router.put("/api/users/like/:id", verifyToken,likeVideo);
+router.put("/api/users/like/:id", verifyToken, likeVideo);
+
+router.put("/api/users/dislike/:id", verifyToken, dislikeVideo);
 
 export default router;
