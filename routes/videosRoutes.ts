@@ -22,5 +22,7 @@ router.get("/api/videos/find/:id", getVideo);
 router.get("/api/videos/trend", trendVideo);
 router.get("/api/videos/random", randomVideo);
 router.get("/api/videos/sub", verifyToken, subsVideo);
+router.get("/api/videos/tags", );
+router.get("/api/videos/search", );
 
 export default router;
