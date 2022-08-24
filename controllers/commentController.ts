@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { createCommentServices, deleteCommentServices } from "../services/commentsServices";
+import { createCommentServices, deleteCommentServices, getCommentsServices } from "../services/commentsServices";
 
 export const addComment = async (req: any, res: Response) => {
 
@@ -26,5 +26,10 @@ export const deleteComment = async (req: any, res: Response) => {
 
 export const getComments = async (req: Request, res: Response) => {
 
+    const { videoId } = req.params;
+
+    const comments = await getCommentsServices(videoId);
+
+    return res.status(StatusCodes.OK).json(comments);
 };
 

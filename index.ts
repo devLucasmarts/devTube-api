@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/usersRoutes';
 import videoRoutes from './routes/videosRoutes';
-// import commentRoutes from './routes/commentsRoutes';
+import commentsRoutes from './routes/commentsRoutes';
 import 'express-async-errors';
 import connection from './models/Connection';
 import cookieParser from 'cookie-parser';
@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(videoRoutes);
-// app.use("/api/comments", commentRoutes);
+app.use(commentsRoutes);
 
 app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
     const { name, message, details } = err as any;

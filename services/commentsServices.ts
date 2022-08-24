@@ -2,6 +2,7 @@ import Comment from "../models/Comment";
 import Video from "../models/Video";
 
 export const createCommentServices = async (id: string, videoId: string, userComment: string) => {
+
     const newComment = new Comment({  userId: id, videoId, userComment  });
 
     const savedComment = await newComment.save();
@@ -10,6 +11,7 @@ export const createCommentServices = async (id: string, videoId: string, userCom
 };
 
 export const deleteCommentServices = async (commentId: string, videoId: string, cookieId: string) => {
+
     const comment = await Comment.findById(commentId);
     const video = await Video.findById(videoId);
 
@@ -23,6 +25,8 @@ export const deleteCommentServices = async (commentId: string, videoId: string, 
 
 };
 
-export const getCommentsServices = async () => {
+export const getCommentsServices = async (videoId: string) => {
+    const comments = await Comment.find({ videoId });
 
+    return comments;
 };
