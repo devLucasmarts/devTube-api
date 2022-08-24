@@ -86,3 +86,12 @@ export const likeVideoServices = async (id: string, videoId: string):Promise<use
 
     return { message: 'Feedback has been sent!' };
 };
+
+export const dislikeVideoServices = async (id: string, videoId: string):Promise<userResponse> => {
+    await Video.findByIdAndUpdate(videoId, {
+        $addToSet: { dislikes: id },
+        $pull: { likes: id }
+    });
+
+    return { message: 'Feedback has been sent!' };
+};

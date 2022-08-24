@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import {
     addSubscription,
     deleteUser,
+    dislikeVideoServices,
     getUser,
     likeVideoServices,
     removeSubscription,
@@ -73,14 +74,19 @@ export const unsubscribe = async (req: any, res: Response) => {
 export const likeVideo = async (req: any, res: Response) => {
 
     const id = req.user.id;
-    const videoId = req.user.videoId;
+    const videoId = req.params.videoId;
 
     const like = await likeVideoServices(id, videoId);
 
     return res.status(StatusCodes.OK).json(like.message);
 };
 
-export const dislikeVideo = async (req: Request, res: Response) => {
+export const dislikeVideo = async (req: any, res: Response) => {
 
-    
+    const id = req.user.id;
+    const videoId = req.params.videoId;
+
+    const dislike = await dislikeVideoServices(id, videoId);
+
+    return res.status(StatusCodes.OK).json(dislike.message);
 };
