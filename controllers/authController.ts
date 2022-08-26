@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { createUser, signinUser } from "../services/authServices";
+import { createUserServices, signinUserServices } from "../services/authServices";
 
 export const signup = async (req: Request, res: Response) => {
 
     const { email, username, password } = req.body;
 
-    const createdUser =  await createUser(email, username, password);
+    const createdUser =  await createUserServices(email, username, password);
 
     if (createdUser?.error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(createdUser.message);
 
@@ -18,7 +18,7 @@ export const signin = async (req: Request, res: Response) => {
 
    const { username, password } = req.body;
 
-   const loginUser = await signinUser(username, password);
+   const loginUser = await signinUserServices(username, password);
 
    if (loginUser?.accountError) return res.status(StatusCodes.NOT_FOUND).send(loginUser.message);
 

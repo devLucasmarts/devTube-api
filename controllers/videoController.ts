@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { 
-    addNewVideo,
-    deleteUserVideo,
-    getVideoById,
-    getVideosByTags,
-    incrementViews,
-    randomVideos,
-    search,
-    subsVideos,
-    trendVideos,
-    updateUserVideo
+    addNewVideoServices,
+    deleteUserVideoServices,
+    getVideoByIdServices,
+    getVideosByTagsServices,
+    incrementViewsServices,
+    randomVideosServices,
+    searchServices,
+    subsVideosServices,
+    trendVideosServices,
+    updateUserVideoServices
 } from "../services/videoServices";
 
 export const addVideo = async (req: any, res: Response) => {
     const { id } = req.user;
     const { title, description, imgUrl, videoUrl } = req.body;
     console.log(id)
-    const newVideo = await addNewVideo(id, title, description, imgUrl, videoUrl);
+    const newVideo = await addNewVideoServices(id, title, description, imgUrl, videoUrl);
 
     if (newVideo.error) return res.status(StatusCodes.BAD_REQUEST).send(newVideo.message);
 
@@ -29,7 +29,7 @@ export const updateVideo = async (req: any, res: Response) => {
     const { id: userId } = req.user;
     const { title, description, imgUrl, videoUrl } = req.body;
 
-    const updatedVideo = await updateUserVideo(id, userId, title, description, imgUrl, videoUrl);
+    const updatedVideo = await updateUserVideoServices(id, userId, title, description, imgUrl, videoUrl);
 
     if (updatedVideo?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(updatedVideo.message);
 
@@ -44,7 +44,7 @@ export const deleteVideo = async (req: any, res: Response) => {
     const { id } = req.params;
     const { id: userId } = req.user;
 
-    const deletedVideo = await deleteUserVideo(id, userId);
+    const deletedVideo = await deleteUserVideoServices(id, userId);
 
     if (deletedVideo?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(deletedVideo?.message);
 
@@ -56,7 +56,7 @@ export const deleteVideo = async (req: any, res: Response) => {
 export const getVideo = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const video = await getVideoById(id);
+    const video = await getVideoByIdServices(id);
 
     if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
 
@@ -66,14 +66,14 @@ export const getVideo = async (req: Request, res: Response) => {
 export const viewVideo = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const video = await incrementViews(id);
+    const video = await incrementViewsServices(id);
 
     return res.status(StatusCodes.OK).send(video?.message);
 };
 
 export const trendVideo = async (_req: Request, res: Response) => {
 
-    const videos = await trendVideos();
+    const videos = await trendVideosServices();
 
     if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
@@ -82,7 +82,7 @@ export const trendVideo = async (_req: Request, res: Response) => {
 
 export const randomVideo = async (_req: Request, res: Response) => {
 
-    const videos = await randomVideos();
+    const videos = await randomVideosServices();
 
     if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
@@ -92,7 +92,7 @@ export const randomVideo = async (_req: Request, res: Response) => {
 export const subsVideo = async (req: any, res: Response) => {
     const { id } = req.user;
 
-    const videos = await subsVideos(id);
+    const videos = await subsVideosServices(id);
 
     if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
@@ -103,7 +103,7 @@ export const getVideoByTags = async (req: Request, res: Response) => {
 
     const tags = (req.query.tags as string)?.split(',')
 
-    const videos = await getVideosByTags(tags);
+    const videos = await getVideosByTagsServices(tags);
 
     if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 
@@ -114,7 +114,7 @@ export const searchVideo = async (req: Request, res: Response) => {
     
     const query = (req.query.q as string);
 
-    const videos = await search(query);
+    const videos = await searchServices(query);
 
     if (videos?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(videos?.message);
 

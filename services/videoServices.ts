@@ -19,7 +19,7 @@ interface randomVideoResponse {
     message?: string;
 }
 
-export const addNewVideo = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse> => {
+export const addNewVideoServices = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse> => {
     if (!title) return { error: true, message: 'Title is required.'};
 
     const newVideo = new Video({ userId: id, title, description, imgUrl, videoUrl });
@@ -29,7 +29,7 @@ export const addNewVideo = async (id: string, title: string, description: string
     return savedVideo;
 };
 
-export const updateUserVideo = async (id: string, userId: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse | undefined | null> => {
+export const updateUserVideoServices = async (id: string, userId: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse | undefined | null> => {
     
     const video = await Video.findById(id);
 
@@ -49,7 +49,7 @@ export const updateUserVideo = async (id: string, userId: string, title: string,
 
 };
 
-export const deleteUserVideo = async (id: string, userId: string):Promise<videoServicesResponse | undefined | null> => {
+export const deleteUserVideoServices = async (id: string, userId: string):Promise<videoServicesResponse | undefined | null> => {
 
     const video = await Video.findById(id);
 
@@ -65,7 +65,7 @@ export const deleteUserVideo = async (id: string, userId: string):Promise<videoS
 
 };
 
-export const getVideoById = async (id: string):Promise<videoServicesResponse | undefined | null> => {
+export const getVideoByIdServices = async (id: string):Promise<videoServicesResponse | undefined | null> => {
     const video = await Video.findById(id);
 
     if (!video) return { notFounderror: true, message: 'Video not found.' };
@@ -73,7 +73,7 @@ export const getVideoById = async (id: string):Promise<videoServicesResponse | u
     return video;
 };
 
-export const incrementViews = async (id: string):Promise<videoServicesResponse | undefined | null> => {
+export const incrementViewsServices = async (id: string):Promise<videoServicesResponse | undefined | null> => {
     await Video.findByIdAndUpdate(id, {
         $inc: { views: 1 }
     });
@@ -81,7 +81,7 @@ export const incrementViews = async (id: string):Promise<videoServicesResponse |
     return { message: 'The view has been increased' };
 };
 
-export const randomVideos = async ():Promise<randomVideoResponse | undefined | null> => {
+export const randomVideosServices = async ():Promise<randomVideoResponse | undefined | null> => {
     const randomVideo = await Video.aggregate([{ $sample: { size: 40 } }]);
 
     if (!randomVideo) return { notFounderror: true, message: 'Cannot get videos.' };
@@ -89,7 +89,7 @@ export const randomVideos = async ():Promise<randomVideoResponse | undefined | n
     return randomVideo as randomVideoResponse;
 }
 
-export const trendVideos = async ():Promise<randomVideoResponse | undefined | null> => {
+export const trendVideosServices = async ():Promise<randomVideoResponse | undefined | null> => {
     const videos = await Video.find().sort({ views: -1 });
 
     if (!videos) return { notFounderror: true, message: 'Cannot get videos.' };
@@ -97,7 +97,7 @@ export const trendVideos = async ():Promise<randomVideoResponse | undefined | nu
     return videos as randomVideoResponse;
 };
 
-export const subsVideos = async (id: string):Promise<randomVideoResponse | undefined | null> => {
+export const subsVideosServices = async (id: string):Promise<randomVideoResponse | undefined | null> => {
     const user = await User.findById(id);
 
     const subscribedChannels = user?.subscribedUsers;
@@ -114,7 +114,7 @@ export const subsVideos = async (id: string):Promise<randomVideoResponse | undef
     return formatedList as randomVideoResponse;
 };
 
-export const getVideosByTags = async (tags: Array<string>):Promise<randomVideoResponse | undefined | null> => {
+export const getVideosByTagsServices = async (tags: Array<string>):Promise<randomVideoResponse | undefined | null> => {
     const videos = await Video.find({ tags: { $in: tags } }).limit(20);
 
     if (!videos.length) return { notFounderror: true, message: 'Video not found.' };
@@ -122,7 +122,7 @@ export const getVideosByTags = async (tags: Array<string>):Promise<randomVideoRe
     return videos as randomVideoResponse;
 };
 
-export const search = async (query: string):Promise<videoServicesResponse | undefined | null> => {
+export const searchServices = async (query: string):Promise<videoServicesResponse | undefined | null> => {
     const videos = await Video.find({ title: { $regex: query, $options: "i" } }).limit(40);
 
     if (!videos.length) return { notFounderror: true, message: 'Video not found.' };

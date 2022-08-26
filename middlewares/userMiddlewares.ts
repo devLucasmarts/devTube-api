@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { verify } from "jsonwebtoken";
 
-import UserDto from "../dtos/User.dto";
 
 export const verifyToken = (req: any , _res: any , next: NextFunction) => {
     const token = req.cookies.access_token;

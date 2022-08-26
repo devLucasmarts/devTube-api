@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import {
-    addSubscription,
-    deleteUser,
+    addSubscriptionServices,
+    deleteUserServices,
     dislikeVideoServices,
-    getUser,
+    getUserServices,
     likeVideoServices,
-    removeSubscription,
-    updateUser
+    removeSubscriptionServices,
+    updateUserServices
 } from "../services/userServices";
 
 export const updateUserAccount = async (req: any, res: Response) => {
@@ -17,7 +17,7 @@ export const updateUserAccount = async (req: any, res: Response) => {
     const { username, email, password, img } = req.body;
 
     if (accountId === tokenId) {
-        const updatedUser = await updateUser(accountId, username, email, password, img);
+        const updatedUser = await updateUserServices(accountId, username, email, password, img);
 
         res.status(StatusCodes.OK).json(updatedUser);
     } else {
@@ -31,7 +31,7 @@ export const deleteUserAccount = async (req: any, res: Response) => {
     const { id: tokenId } = req.user;
 
     if (accountId === tokenId) {
-        const deletedUser = await deleteUser(accountId);
+        const deletedUser = await deleteUserServices(accountId);
 
         res.status(StatusCodes.OK).send(deletedUser.message);
     } else {
@@ -44,7 +44,7 @@ export const getUserAccount = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const account = await getUser(id);
+    const account = await getUserServices(id);
 
     if (account?.error) return res.status(StatusCodes.NOT_FOUND).send(account?.message);
 
@@ -56,7 +56,7 @@ export const subscribe = async (req: any, res: Response) => {
     const channelAccountId = req.user.id;
     const userAccountId = req.params.id;
 
-    const subscription = await addSubscription(channelAccountId, userAccountId);
+    const subscription = await addSubscriptionServices(channelAccountId, userAccountId);
 
     return res.status(StatusCodes.OK).json(subscription.message);
 };
@@ -66,7 +66,7 @@ export const unsubscribe = async (req: any, res: Response) => {
     const channelAccountId = req.user.id;
     const userAccountId = req.params.id;
 
-    const unsubscription = await removeSubscription(channelAccountId, userAccountId);
+    const unsubscription = await removeSubscriptionServices(channelAccountId, userAccountId);
 
     return res.status(StatusCodes.OK).json(unsubscription.message);
 };

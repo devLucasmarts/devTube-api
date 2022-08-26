@@ -54,13 +54,13 @@ function validationUser(req: Request, res: Response, next: NextFunction) {
     let [validPasswor, errorMessage] = validateUserPassword(user.password);
 
     if (!valid) {
-        return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} é obrigatório.`);
+        return res.status(StatusCodes.BAD_REQUEST).send(`The field ${property} is required!`);
     };
 
     [valid, property] = validateValues(user);
 
     if (!valid) {
-        return res.status(StatusCodes.BAD_REQUEST).send(`O campo ${property} não pode ser nulo ou vazio.`);
+        return res.status(StatusCodes.BAD_REQUEST).send(`The field ${property} is not to be nullable or empty.`);
     };
 
     [validPasswor, errorMessage] = validateUserPassword(user.password);

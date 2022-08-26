@@ -15,7 +15,7 @@ interface signUpResponse {
     message?: string;
 };
 
-export const createUser = async (email: string, username: string, password: string): Promise<signUpResponse | undefined> => {
+export const createUserServices = async (email: string, username: string, password: string): Promise<signUpResponse | undefined> => {
 
     if (await User.findOne({ email })) return {error: true, message: 'Email already in use!'};
     if (await User.findOne({ username })) return {error: true, message: 'Username already in use!'};
@@ -28,7 +28,7 @@ export const createUser = async (email: string, username: string, password: stri
     await newUser.save();
 };
 
-export const signinUser = async (username: string, password: string ): Promise<signinResponse | undefined> => {
+export const signinUserServices = async (username: string, password: string ): Promise<signinResponse | undefined> => {
 
     const userAccount = await User.findOne({ username });
     if (!userAccount) return { accountError: true, message: 'User not found!' };
