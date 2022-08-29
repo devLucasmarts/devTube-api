@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { createUserServices, signinUserServices } from "../services/authServices";
+import { createUserServices, googleAuthServices, signinUserServices } from "../services/authServices";
 
 export const signup = async (req: Request, res: Response) => {
 
@@ -33,11 +33,7 @@ export const googleAuth = async (req: Request, res: Response) => {
 
     const { name, email, img } = req.body;
  
-    const loginUser = await signinUserServices(name, email, img);
- 
-    if (loginUser?.accountError) return res.status(StatusCodes.NOT_FOUND).send(loginUser.message);
- 
-    if (loginUser?.passwordError) return res.status(StatusCodes.UNAUTHORIZED).send(loginUser.message);
+    const loginUser = await googleAuthServices(name, email, img);
  
     res.cookie("access_token", loginUser?.token, {
      httpOnly: true
