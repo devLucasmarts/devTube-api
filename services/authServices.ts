@@ -48,3 +48,35 @@ export const signinUserServices = async (username: string, password: string ): P
 
     if (userAccount) return { accountData , token };
 };
+
+export const googleAuthServices = async (name: string, email: string, img: string ): Promise<signinResponse | undefined> => {
+
+    const userAccount = await User.findOne({ email });
+   
+   if (userAccount) {
+        const token = sign({ id: userAccount?._id }, process.env.JWT ?? '');
+
+        const accountData = {
+            id: userAccount?._id,
+            username: userAccount?.username,
+            email: userAccount?.email,
+            subscribers: userAccount?.subscribers,
+            subscribedUsers: userAccount?.subscribedUsers,
+        }
+
+        return { accountData , token };
+   } else {
+        const newUser = new User({
+            username: name,
+            email: email,
+            img: img,
+            fromGoogle: true,
+        })
+
+        const savedUser = await newUser.save();
+
+        const token = sign({ id: savedUser?._id }, process.env.JWT ?? '');
+
+        return { savedUser , token } as signinResponse;
+   }
+};

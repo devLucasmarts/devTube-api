@@ -12,6 +12,8 @@ interface UserDto {
 
     subscribedUsers: [string];
 
+    fromGoogle: boolean;
+
     createdAt: string;
 
     updatedAt: string;

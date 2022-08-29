@@ -29,6 +29,12 @@ const UserSchema = new Schema<User>({
     subscribedUsers: {
         type: [String],
     },
+
+    fromGoogle: {
+        type: Boolean,
+        default: false,
+    },
+
 }, { timestamps: true })
 
 export default model<User>('User', UserSchema);
