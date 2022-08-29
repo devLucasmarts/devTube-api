@@ -49,7 +49,7 @@ export const signinUserServices = async (username: string, password: string ): P
     if (userAccount) return { accountData , token };
 };
 
-export const googleAuthServices = async (name: string, email: string, img: string ): Promise<signinResponse | undefined> => {
+export const googleAuthServices = async (name: string, email: string, img: string): Promise<signinResponse | undefined> => {
 
     const userAccount = await User.findOne({ email });
    
@@ -69,6 +69,7 @@ export const googleAuthServices = async (name: string, email: string, img: strin
         const newUser = new User({
             username: name,
             email: email,
+            password: '123',
             img: img,
             fromGoogle: true,
         })
