@@ -60,6 +60,7 @@ export const googleAuthServices = async (name: string, email: string, img: strin
             id: userAccount?._id,
             username: userAccount?.username,
             email: userAccount?.email,
+            img: userAccount?.img,
             subscribers: userAccount?.subscribers,
             subscribedUsers: userAccount?.subscribedUsers,
         }
