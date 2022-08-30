@@ -69,7 +69,6 @@ export const googleAuthServices = async (name: string, email: string, img: strin
         const newUser = new User({
             username: name,
             email: email,
-            password: '123',
             img: img,
             fromGoogle: true,
         })
