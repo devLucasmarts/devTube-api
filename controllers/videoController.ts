@@ -15,9 +15,9 @@ import {
 
 export const addVideo = async (req: any, res: Response) => {
     const { id } = req.user;
-    const { title, description, imgUrl, videoUrl } = req.body;
-    console.log(id)
-    const newVideo = await addNewVideoServices(id, title, description, imgUrl, videoUrl);
+    const { title, description, imgUrl, videoUrl, tags } = req.body;
+
+    const newVideo = await addNewVideoServices(id, title, description, imgUrl, videoUrl, tags);
 
     if (newVideo.error) return res.status(StatusCodes.BAD_REQUEST).send(newVideo.message);
 

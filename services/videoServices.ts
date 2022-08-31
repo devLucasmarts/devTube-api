@@ -7,6 +7,7 @@ interface videoServicesResponse {
     description?: string; 
     imgUrl?: string;
     videoUrl?: string;
+    tags?: Array<string>
     error?: boolean;
     notFounderror?: boolean;
     unauthorizedError?: boolean;
@@ -19,10 +20,10 @@ interface randomVideoResponse {
     message?: string;
 }
 
-export const addNewVideoServices = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse> => {
+export const addNewVideoServices = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string, tags: Array<string>):Promise<videoServicesResponse> => {
     if (!title) return { error: true, message: 'Title is required.'};
 
-    const newVideo = new Video({ userId: id, title, description, imgUrl, videoUrl });
+    const newVideo = new Video({ userId: id, title, description, imgUrl, videoUrl, tags });
 
     const savedVideo = await newVideo.save();
 
