@@ -19,7 +19,7 @@ export const addVideo = async (req: any, res: Response) => {
 
     const newVideo = await addNewVideoServices(id, title, description, imgUrl, videoUrl, tags);
 
-    if (newVideo.error) return res.status(StatusCodes.BAD_REQUEST).send(newVideo.message);
+    if (newVideo?.error) return res.status(StatusCodes.BAD_REQUEST).send(newVideo.message);
 
     return res.status(StatusCodes.CREATED).json(newVideo);
 };

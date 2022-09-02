@@ -20,8 +20,21 @@ interface randomVideoResponse {
     message?: string;
 }
 
-export const addNewVideoServices = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string, tags: Array<string>):Promise<videoServicesResponse> => {
+const newVideoValidation = async (title: string, description: string, imgUrl: string, videoUrl: string) => {
     if (!title) return { error: true, message: 'Title is required.'};
+
+    if (!description) return { error: true, message: 'Description is required.'};
+
+    if (!imgUrl) return { error: true, message: 'Upload a video thumb.'};
+
+    if (!videoUrl) return { error: true, message: 'Choose a video!'};
+}
+
+export const addNewVideoServices = async (id: string, title: string, description: string, imgUrl: string, videoUrl: string, tags: Array<string>):Promise<videoServicesResponse | undefined | null> => {
+    
+    const validVideo = await newVideoValidation(title, description, imgUrl, videoUrl);
+
+    if (validVideo) return { error: validVideo.error, message: validVideo.message }
 
     const newVideo = new Video({ userId: id, title, description, imgUrl, videoUrl, tags });
 
@@ -35,8 +48,6 @@ export const updateUserVideoServices = async (id: string, userId: string, title:
     const video = await Video.findById(id);
 
     if (!video) return { notFounderror: true, message: 'Video not found.' };
-
-    if (!title) return { error: true, message: 'Title is required.'};
 
    if (userId === video.userId) {
     const updatedVideo = await Video.findByIdAndUpdate(id, {
