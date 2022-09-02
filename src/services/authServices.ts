@@ -15,15 +15,28 @@ interface signUpResponse {
     message?: string;
 };
 
-export const createUserServices = async (email: string, username: string, password: string): Promise<signUpResponse | undefined> => {
-
+const validUserCredentials = async (email: string, username: string,) => {
     if (await User.findOne({ email })) return {error: true, message: 'Email already in use!'};
-    if (await User.findOne({ username })) return {error: true, message: 'Username already in use!'};
 
+    if (await User.findOne({ username })) return {error: true, message: 'Username already in use!'};
+};
+
+const encryptPassword = (password: string) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const newUser = new User({ email, username, password: hash });
+    return hash;
+};
+
+export const createUserServices = async (email: string, username: string, password: string): Promise<signUpResponse | undefined> => {
+
+    const validUser = await validUserCredentials(email, username);
+
+    if (validUser) return { error: validUser.error, message: validUser.message };
+
+    const encryptedPassword = encryptPassword(password); 
+
+    const newUser = new User({ email, username, password: encryptedPassword });
 
     await newUser.save();
 };
