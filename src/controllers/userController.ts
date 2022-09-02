@@ -35,7 +35,7 @@ export const deleteUserAccount = async (req: any, res: Response) => {
     if (accountId === tokenId) {
         const deletedUser = await deleteUserServices(accountId);
 
-        res.status(StatusCodes.OK).send(deletedUser.message);
+        res.status(StatusCodes.OK).send(deletedUser?.message);
     } else {
         return res.status(StatusCodes.FORBIDDEN).send("You can delete only your account!");
     };
