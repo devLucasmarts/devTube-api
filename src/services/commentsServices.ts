@@ -10,13 +10,20 @@ interface commentServicesResponse {
     error?: boolean;
     notFoundError?: boolean;
     message?: string;
-    comments?: object[]
-}
+    comments?: object[];
+};
+
+const commentValidation = async (videoId: string, userComment: string) => {
+    if (!videoId) return { error: true, message: 'videoId is required!' };
+
+    if (!userComment) return { error: true, message: 'Please write some comment' };
+};
 
 export const createCommentServices = async (id: string, videoId: string, userComment: string):Promise<commentServicesResponse | undefined> => {
 
-    if (!videoId) return { error: true, message: 'videoId is required!' };
-    if (!userComment) return { error: true, message: 'Please write some comment' };
+    const validComment = await commentValidation(videoId, userComment);
+
+    if (validComment) return { error: validComment.error, message: validComment.message };
 
     const newComment = new Comment({  userId: id, videoId, userComment  });
 
@@ -45,8 +52,6 @@ export const getCommentsServices = async (videoId: string):Promise<commentServic
     if (!videoId) return { error: true, message: 'Video id is required!' };
 
     const comments = await Comment.find({ videoId });
-
-    if (!comments.length) return { notFoundError: true, message: 'No comments yet.' }
 
     return comments as commentServicesResponse;
 };
