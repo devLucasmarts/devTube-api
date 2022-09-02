@@ -31,45 +31,60 @@ function validateValues(user: UserDto): [boolean, string | null] {
 
 function validateUserPassword(userPassword: string): [boolean, string | null] {
 
-    const invalidTypePassword = 'The password must have letters, numbers and/or symbols';
+    const invalidTypePassword = 'The password must have letters, numbers and/or symbols.';
 
-    const invalidPasswordLength = 'The password must have 8 characters or more';
+    const invalidPasswordLength = 'The password must have 8 characters or more.';
 
     if (typeof userPassword !== 'string') {
-        return [false, invalidTypePassword]
+        return [false, invalidTypePassword];
     };
 
     if (userPassword.length < 8) {
-        return [false, invalidPasswordLength]
+        return [false, invalidPasswordLength];
     };
 
     return [true, null];
 };
 
-function validationUser(req: Request, res: Response, next: NextFunction) {
+function validateEmail(userEmail: string): [boolean, string | null] {
+
+    const ivalidEmail = 'Invalid email.';
+
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+    if (!emailRegex.test(userEmail)) {
+        return [false, ivalidEmail];
+    };
+
+    return [true, null];
+};
+
+export default function signUpFieldsValidation(req: Request, res: Response, next: NextFunction) {
     const user: UserDto = req.body;
 
     let [valid, property] = validateProperties(user);
 
-    let [validPasswor, errorMessage] = validateUserPassword(user.password);
+    let [validPasswor, passwordErrorMessage] = validateUserPassword(user.password);
+
+    let [validEmail, emailErrorMessage] = validateEmail(user.email);
+
+    [valid, property] = validateValues(user);
 
     if (!valid) {
         return res.status(StatusCodes.BAD_REQUEST).send(`The field ${property} is required!`);
     };
 
-    [valid, property] = validateValues(user);
-
     if (!valid) {
         return res.status(StatusCodes.BAD_REQUEST).send(`The field ${property} is not to be nullable or empty.`);
     };
 
-    [validPasswor, errorMessage] = validateUserPassword(user.password);
-
     if (!validPasswor) {
-        return res.status(StatusCodes.BAD_REQUEST).send(errorMessage);
-    }
+        return res.status(StatusCodes.BAD_REQUEST).send(passwordErrorMessage);
+    };
+
+    if (!validEmail) {
+        return res.status(StatusCodes.BAD_REQUEST).send(emailErrorMessage);
+    };
 
     next();
 };
-
-export default validationUser;
