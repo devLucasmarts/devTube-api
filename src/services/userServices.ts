@@ -1,5 +1,6 @@
 import User from "../models/User";
 import Video from "../models/Video";
+import bcrypt from "bcryptjs";
 var ObjectID = require('mongodb').ObjectID;
 
 
@@ -16,9 +17,33 @@ interface userResponse {
     message?: string;
 };
 
-export const updateUserServices = async (userId: string, username: string, email: string, password: string, img: string) => {
+const validateUserCredentials = async (username: string, email: string, password: string) => {
+    if (await User.findOne({ email })) return {error: true, message: 'Email already in use!'};
+
+    if (await User.findOne({ username })) return {error: true, message: 'Username already in use!'};
+
+    if (password && password.length < 8) return { error: true, message: 'The password must have 8 characters or more.' };
+
+    if (password && typeof password !== 'string') return { error: true, message: 'The password must have letters, numbers and/or symbols.' };
+};
+
+const encryptPassword = (password: string) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+    return hash;
+};
+
+export const updateUserServices = async (userId: string, username: string, email: string, password: string, img: string):Promise<userResponse | null> => {
+
+    const userCredentialsValidation = await validateUserCredentials(username, email, password);
+
+    if (userCredentialsValidation) return { error: userCredentialsValidation.error, message: userCredentialsValidation.message };
+
+    const encryptedPassword = encryptPassword(password);
+
     const updatedUser = await User.findByIdAndUpdate(userId, {
-        $set: { username, email, password, img }
+        $set: { username, email, password: encryptedPassword, img }
     }, { new: true });
 
     const accountUpdated = {

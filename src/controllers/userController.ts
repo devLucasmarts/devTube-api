@@ -19,6 +19,8 @@ export const updateUserAccount = async (req: any, res: Response) => {
     if (accountId === tokenId) {
         const updatedUser = await updateUserServices(accountId, username, email, password, img);
 
+        if (updatedUser?.error) return res.status(StatusCodes.BAD_REQUEST).send(updatedUser?.message);
+
         res.status(StatusCodes.OK).json(updatedUser);
     } else {
         return res.status(StatusCodes.FORBIDDEN).send("You can update only your account!");
