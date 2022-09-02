@@ -58,7 +58,7 @@ export const updateUserServices = async (userId: string, username: string, email
 };
 
 
-export const deleteUserServices = async (userId: string) => {
+export const deleteUserServices = async (userId: string):Promise<userResponse | null> => {
     await User.findByIdAndDelete(userId);
 
     return { message: 'User has been deleted.' };
