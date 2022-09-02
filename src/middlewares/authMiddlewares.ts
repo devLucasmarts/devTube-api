@@ -31,9 +31,9 @@ function validateValues(user: UserDto): [boolean, string | null] {
 
 function validateUserPassword(userPassword: string): [boolean, string | null] {
 
-    const invalidTypePassword = 'A senha deve conter números, letras e/ou caracteres especiais.';
+    const invalidTypePassword = 'The password must have letters, numbers and/or symbols';
 
-    const invalidPasswordLength = 'A senha deve conter pelo menos oito caracteres';
+    const invalidPasswordLength = 'The password must have 8 characters or more';
 
     if (typeof userPassword !== 'string') {
         return [false, invalidTypePassword]
