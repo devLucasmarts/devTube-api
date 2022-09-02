@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { 
     addNewVideoServices,
     deleteUserVideoServices,
+    getChannelVideoByIdServices,
     getVideoByIdServices,
     getVideosByTagsServices,
     incrementViewsServices,
@@ -57,6 +58,16 @@ export const getVideo = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     const video = await getVideoByIdServices(id);
+
+    if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
+
+    return res.status(StatusCodes.OK).json(video);
+};
+
+export const getChannelVideos = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const video = await getChannelVideoByIdServices(id);
 
     if (video?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(video?.message);
 

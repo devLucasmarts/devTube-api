@@ -11,6 +11,7 @@ import {
     trendVideo,
     updateVideo,
     viewVideo,
+    getChannelVideos,
 } from '../controllers/videoController';
 import { verifyToken } from '../middlewares/userMiddlewares';
 
@@ -26,5 +27,6 @@ router.get("/api/videos/random", randomVideo);
 router.get("/api/videos/sub", verifyToken, subsVideo);
 router.get("/api/videos/tags", getVideoByTags);
 router.get("/api/videos/search", searchVideo);
+router.get("/api/videos/channel/:id", getChannelVideos);
 
 export default router;

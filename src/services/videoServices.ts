@@ -8,6 +8,7 @@ interface videoServicesResponse {
     imgUrl?: string;
     videoUrl?: string;
     tags?: Array<string>
+    channelVideos?: Array<object>;
     error?: boolean;
     notFounderror?: boolean;
     unauthorizedError?: boolean;
@@ -83,6 +84,14 @@ export const getVideoByIdServices = async (id: string):Promise<videoServicesResp
     if (!video) return { notFounderror: true, message: 'Video not found.' };
 
     return video;
+};
+
+export const getChannelVideoByIdServices = async (id: string):Promise<videoServicesResponse | undefined | null> => {
+    const channelVideos = await Video.find().where({ userId: id });
+
+    if (!channelVideos.length) return { notFounderror: true, message: 'Nothing yet' };
+
+    return channelVideos as videoServicesResponse;
 };
 
 export const incrementViewsServices = async (id: string):Promise<videoServicesResponse | undefined | null> => {
