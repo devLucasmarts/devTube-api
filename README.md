@@ -161,3 +161,84 @@ curl --request PUT \
 
 ## Video routes
 
+### Get random videos (/api/videos/random)
+
+<pre>
+curl --request GET \
+  --url http://localhost:3001/api/videos/random \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+<br />
+
+### Get video by id (/api/videos/find/:id)
+Pass the video id via params.
+
+<pre>
+curl --request GET \
+  --url http://localhost:3001/api/videos/find/6316492840d59f7c71d8bbf6 \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+<br />
+
+### Get video by query (/api/videos/search?q=)
+Pass the key word via query.
+
+<pre>
+curl --request GET \
+  --url 'http://localhost:3001/api/videos/search?q=best' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+<br />
+
+### Get video by tags (/api/videos/tags?tags=)
+Pass the video tag via query.
+
+<pre>
+curl --request GET \
+  --url 'http://localhost:3001/api/videos/tags?tags=React%2CJs' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+<br />
+
+### Get all channel videos by id (/api/videos/channel/:id)
+Pass the user id via params.
+
+<pre>
+curl --request GET \
+  --url http://localhost:3001/api/videos/channel/63125aefef2e78fd9ee330bb \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+<br />
+
+### Add video (/api/videos/)
+Pass the user id via params.
+
+<pre>
+curl --request POST \
+  --url http://localhost:3001/api/videos/ \
+  --header 'Content-Type: application/json' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I \
+  --data '{
+	"title": "The best Mew",
+	"description": "teste desc",
+	"imgUrl": "hero.jpg",
+	"videoUrl": "teste",
+	"tags": ["js", "React"]
+}'
+</pre>
+
+<br />
+
+### Delete video (/api/videos/:id)
+Pass the video id via params.
+
+<pre>
+curl --request DELETE \
+  --url http://localhost:3001/api/videos/63165f128c2a6905afe1d917 \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
