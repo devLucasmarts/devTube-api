@@ -103,3 +103,61 @@ curl --request DELETE \
   --header 'Content-Type: application/json' \
   --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
 </pre>
+
+<br />
+
+### Update an account (/api/users/:id)
+
+<pre>
+curl --request PUT \
+  --url http://localhost:3001/api/users/631645bc40d59f7c71d8bbec \
+  --header 'Content-Type: application/json' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I \
+  --data '{
+	"password": "12345678"
+} '
+</pre>
+
+<br />
+
+### Like video (/api/users/like/:id)
+Pass the video id via params
+
+<pre>
+curl --request PUT \
+  --url http://localhost:3001/api/users/631645bc40d59f7c71d8bbec \
+  --header 'Content-Type: application/json' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I \
+  --data '{
+	"password": "12345678"
+} '
+</pre>
+
+<br />
+
+### Dislike video (/api/users/dislike/:id)
+Pass the video id via params
+
+<pre>
+curl --request PUT \
+  --url http://localhost:3001/api/users/631645bc40d59f7c71d8bbec \
+  --header 'Content-Type: application/json' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I \
+  --data '{
+	"password": "12345678"
+} '
+</pre>
+
+<br />
+
+### Subscribe (/api/users/sub/:id)
+Pass the user id via params
+
+<pre>
+curl --request PUT \
+  --url http://localhost:3001/api/users/sub/631645bc40d59f7c71d8bbec \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+## Video routes
+
