@@ -216,7 +216,6 @@ curl --request GET \
 <br />
 
 ### Add video (/api/videos/)
-Pass the user id via params.
 
 <pre>
 curl --request POST \
@@ -242,3 +241,38 @@ curl --request DELETE \
   --url http://localhost:3001/api/videos/63165f128c2a6905afe1d917 \
   --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
 </pre>
+
+<br />
+
+## Video comments
+
+<br />
+
+### Add comment (/api/video/comments/)
+
+<pre>
+curl --request POST \
+  --url http://localhost:3001/api/video/comments/ \
+  --header 'Content-Type: application/json' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I \
+  --data '{
+	"userComment": "First!",
+	"videoId": "63053743b8baade512e3a015"
+}'
+</pre>
+
+<br />
+
+<br />
+
+### Get all comments (/api/video/comments/:id)
+Pass the video id via params.
+
+<pre>
+curl --request GET \
+  --url http://localhost:3001/api/video/comments/6316609a8c2a6905afe1d91e \
+  --header 'Content-Type: application/json' \
+  --cookie access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTY0NWJjNDBkNTlmN2M3MWQ4YmJlYyIsImlhdCI6MTY2MjQwNDAzMn0.gwOQ0G0GVdCgHZu3E3pOUBlXM4vivsux4h6VzNOim9I
+</pre>
+
+<br />
