@@ -33,6 +33,11 @@ npm install
 
 <br />
 
+### Config the ENVs 🔧
+Look the env.example inside the src directory.
+
+<br />
+
 ### Run the project! ▶️
 
 <pre>
@@ -42,6 +47,7 @@ npm run dev
 <br />
 
 ## How to use the API 🖥️
+Just copy and paste the Curls below into your favorite API client like Insomnia or Postman.
 
 <br />
 
@@ -121,7 +127,7 @@ curl --request PUT \
 <br />
 
 ### Like video (/api/users/like/:id)
-Pass the video id via params
+Pass the video id via params.
 
 <pre>
 curl --request PUT \
@@ -136,7 +142,7 @@ curl --request PUT \
 <br />
 
 ### Dislike video (/api/users/dislike/:id)
-Pass the video id via params
+Pass the video id via params.
 
 <pre>
 curl --request PUT \
@@ -151,7 +157,7 @@ curl --request PUT \
 <br />
 
 ### Subscribe (/api/users/sub/:id)
-Pass the user id via params
+Pass the user id via params.
 
 <pre>
 curl --request PUT \
