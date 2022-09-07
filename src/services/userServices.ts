@@ -40,7 +40,7 @@ export const updateUserServices = async (userId: string, username: string, email
 
     if (userCredentialsValidation) return { error: userCredentialsValidation.error, message: userCredentialsValidation.message };
 
-    const encryptedPassword = encryptPassword(password);
+    const encryptedPassword = password && encryptPassword(password);
 
     const updatedUser = await User.findByIdAndUpdate(userId, {
         $set: { username, email, password: encryptedPassword, img }
@@ -50,6 +50,7 @@ export const updateUserServices = async (userId: string, username: string, email
         "_id": updatedUser?._id,
         "username": updatedUser?.username,
         "email": updatedUser?.email,
+        "img": updatedUser?.img,
         "subscribers":  updatedUser?.subscribers,
         "subscribedUsers": updatedUser?.subscribedUsers,
     };
@@ -60,6 +61,7 @@ export const updateUserServices = async (userId: string, username: string, email
 
 export const deleteUserServices = async (userId: string):Promise<userResponse | null> => {
     await User.findByIdAndDelete(userId);
+    await Video.deleteMany().where({ userId: userId });
 
     return { message: 'User has been deleted.' };
 };

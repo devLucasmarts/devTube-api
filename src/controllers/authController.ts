@@ -16,9 +16,9 @@ export const signup = async (req: Request, res: Response) => {
 
 export const signin = async (req: Request, res: Response) => {
 
-   const { username, password } = req.body;
+   const { email, password } = req.body;
 
-   const loginUser = await signinUserServices(username, password);
+   const loginUser = await signinUserServices(email, password);
 
    if (loginUser?.accountError) return res.status(StatusCodes.NOT_FOUND).send(loginUser.message);
 

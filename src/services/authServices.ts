@@ -41,9 +41,9 @@ export const createUserServices = async (email: string, username: string, passwo
     await newUser.save();
 };
 
-export const signinUserServices = async (username: string, password: string ): Promise<signinResponse | undefined> => {
+export const signinUserServices = async (email: string, password: string ): Promise<signinResponse | undefined> => {
 
-    const userAccount = await User.findOne({ username });
+    const userAccount = await User.findOne({ email });
     if (!userAccount) return { accountError: true, message: 'User not found!' };
 
     const isCorrect = await bcrypt.compare(password, userAccount.password);
@@ -52,9 +52,10 @@ export const signinUserServices = async (username: string, password: string ): P
     const token = sign({ id: userAccount._id }, process.env.JWT ?? '');
 
     const accountData = {
-        id: userAccount._id,
+        _id: userAccount._id,
         username: userAccount.username,
         email: userAccount.email,
+        img: userAccount.img,
         subscribers: userAccount.subscribers,
         subscribedUsers: userAccount.subscribedUsers,
     }
@@ -70,10 +71,11 @@ export const googleAuthServices = async (name: string, email: string, img: strin
         const token = sign({ id: userAccount?._id }, process.env.JWT ?? '');
 
         const accountData = {
-            id: userAccount?._id,
+            _id: userAccount?._id,
             username: userAccount?.username,
             email: userAccount?.email,
             img: userAccount?.img,
+            fromGoogle: userAccount?.fromGoogle,
             subscribers: userAccount?.subscribers,
             subscribedUsers: userAccount?.subscribedUsers,
         }
