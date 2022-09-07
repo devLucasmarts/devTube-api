@@ -11,6 +11,8 @@ interface signinResponse {
 };
 
 interface signUpResponse {
+    accountData?: object,
+    token?: string;
     error?: boolean;
     message?: string;
 };
@@ -39,6 +41,19 @@ export const createUserServices = async (email: string, username: string, passwo
     const newUser = new User({ email, username, password: encryptedPassword });
 
     await newUser.save();
+
+    const token = sign({ id: newUser._id }, process.env.JWT ?? '');
+
+    const accountData = {
+        _id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+        img: newUser.img,
+        subscribers: newUser.subscribers,
+        subscribedUsers: newUser.subscribedUsers,
+    }
+
+    if (newUser) return { accountData , token };
 };
 
 export const signinUserServices = async (email: string, password: string ): Promise<signinResponse | undefined> => {

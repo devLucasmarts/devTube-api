@@ -11,7 +11,9 @@ export const signup = async (req: Request, res: Response) => {
 
     if (createdUser?.error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(createdUser.message);
 
-    res.status(StatusCodes.CREATED).send("User has been crated!");
+    res.cookie("access_token", createdUser?.token, {
+        httpOnly: true
+    }).status(StatusCodes.CREATED).send(createdUser);
 };
 
 export const signin = async (req: Request, res: Response) => {
