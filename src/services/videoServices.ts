@@ -44,7 +44,7 @@ export const addNewVideoServices = async (id: string, title: string, description
     return savedVideo;
 };
 
-export const updateUserVideoServices = async (id: string, userId: string, title: string, description: string, imgUrl: string, videoUrl: string):Promise<videoServicesResponse | undefined | null> => {
+export const updateUserVideoServices = async (id: string, userId: string, title: string, description: string, imgUrl: string, videoUrl: string, tags:Array<string>):Promise<videoServicesResponse | undefined | null> => {
     
     const video = await Video.findById(id);
 
@@ -52,7 +52,7 @@ export const updateUserVideoServices = async (id: string, userId: string, title:
 
    if (userId === video.userId) {
     const updatedVideo = await Video.findByIdAndUpdate(id, {
-        $set: { title, description, imgUrl, videoUrl }
+        $set: { title, description, imgUrl, videoUrl, tags }
     }, { new: true });
 
     return updatedVideo;

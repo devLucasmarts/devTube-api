@@ -28,9 +28,9 @@ export const addVideo = async (req: any, res: Response) => {
 export const updateVideo = async (req: any, res: Response) => {
     const { id } = req.params;
     const { id: userId } = req.user;
-    const { title, description, imgUrl, videoUrl } = req.body;
+    const { title, description, imgUrl, videoUrl, tags } = req.body;
 
-    const updatedVideo = await updateUserVideoServices(id, userId, title, description, imgUrl, videoUrl);
+    const updatedVideo = await updateUserVideoServices(id, userId, title, description, imgUrl, videoUrl, tags);
 
     if (updatedVideo?.notFounderror) return res.status(StatusCodes.NOT_FOUND).send(updatedVideo.message);
 
