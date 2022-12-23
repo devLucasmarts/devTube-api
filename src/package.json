@@ -19,7 +19,7 @@
     "express-async-errors": "^3.1.1",
     "http-status-codes": "^2.2.0",
     "install": "^0.13.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.5.2",
     "npm": "^8.18.0"
   },
